@@ -3,6 +3,7 @@ package com.bcopstein.Interface;
 import java.util.Collection;
 import java.util.List;
 
+import com.bcopstein.Aplicacao.CasosDeUso.BaixaDeProdutoUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ChegadaDeProdutosUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ListaItemsDisponiveisParaVendaUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ListaTodosItemsUC;
@@ -27,15 +28,17 @@ public class EstoqueController {
   ChegadaDeProdutosUC chegadaDeProdutosUC;
   ListaItemsDisponiveisParaVendaUC listaItemsDisponiveisParaVendaUC;
   ValidaProdutoParaVendaUC validaProdutoParaVendaUC;
+  BaixaDeProdutoUC baixaDeProdutoUC;
 
   @Autowired
   public EstoqueController(ChegadaDeProdutosUC chegadaDeProdutosUC, 
   ListaTodosItemsUC listaTodosItemsUC, ListaItemsDisponiveisParaVendaUC listaItemsDisponiveisParaVendaUC,
-  ValidaProdutoParaVendaUC validaProdutoParaVendaUC) {
+  ValidaProdutoParaVendaUC validaProdutoParaVendaUC, BaixaDeProdutoUC baixaDeProdutoUC) {
     this.chegadaDeProdutosUC = chegadaDeProdutosUC;
     this.listaTodosItemsUC = listaTodosItemsUC;
     this.listaItemsDisponiveisParaVendaUC = listaItemsDisponiveisParaVendaUC;
     this.validaProdutoParaVendaUC = validaProdutoParaVendaUC;
+    this.baixaDeProdutoUC = baixaDeProdutoUC;
   }
 
   //Por motivos de debug
@@ -70,5 +73,13 @@ public class EstoqueController {
   public boolean produtoDisponivel(@PathVariable long nroItem,
   @PathVariable long codigoProduto, @PathVariable int quantidade) {
     return validaProdutoParaVendaUC.execute(nroItem, codigoProduto, quantidade);
+  }
+
+  // Baixa no estoque: 
+  // Deve atualizar a quantidade de um produto no estoque subtraindo a quantidade vendida. 
+  // Deve sinalizar caso a operação não seja possível.
+  @PostMapping("/baixa")
+  public boolean baixaEstoque(@RequestBody Collection<ItemEstoque> itens) {
+    return baixaDeProdutoUC.execute(itens);
   }
 }

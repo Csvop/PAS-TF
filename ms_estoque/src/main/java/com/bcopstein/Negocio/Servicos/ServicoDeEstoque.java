@@ -1,5 +1,6 @@
 package com.bcopstein.Negocio.Servicos;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,6 +22,31 @@ public class ServicoDeEstoque {
     public ServicoDeEstoque(IProdutos produtos, IEstoque estoque) {
         this.produtos = produtos;
         this.estoque = estoque;
+    }
+
+    public boolean baixa(Collection<ItemEstoque> itens) {
+        Collection<ItemEstoque> validos = new ArrayList<>();
+
+        disponiveis().forEach((item) -> {
+            if(item.disponivel(item.getQuantidade())) {
+                validos.add(item);
+            }
+        });
+
+        if(itens.size() == validos.size()) {
+
+            validos.forEach((item) -> {
+                int qnt = item.getQuantidade();
+                item.saida(qnt);
+                
+                //Atualiza o item
+                estoque.atualiza(item);
+            });
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void cadastra(Long codigoProduto, int quantidade) {
