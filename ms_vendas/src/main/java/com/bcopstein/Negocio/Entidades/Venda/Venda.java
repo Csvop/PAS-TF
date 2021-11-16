@@ -29,7 +29,6 @@ public class Venda {
   private boolean fechada;
 
   public Venda() {
-    //this.codigo = -1L;
     this.data = LocalDate.now();
     this.itens = new LinkedList<>();
     this.subtotal = 0.0;
