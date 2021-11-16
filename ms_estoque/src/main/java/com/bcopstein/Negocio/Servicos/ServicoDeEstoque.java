@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import com.bcopstein.Negocio.Entidades.ItemEstoque.ItemEstoque;
-import com.bcopstein.Negocio.Entidades.Venda.ItemVenda;
 import com.bcopstein.Negocio.Exception.SistVendasException;
 import com.bcopstein.Negocio.Repositorio.IEstoque;
 import com.bcopstein.Negocio.Repositorio.IProdutos;
@@ -69,16 +68,6 @@ public class ServicoDeEstoque {
         estoque.cadastra(it);
     }
 
-    public void entradaDeProduto(int codigoProduto, int qtdade) {
-        Collection<ItemEstoque> itens = estoque.pesquisa(ie -> ie.getCodigoProduto() == codigoProduto);
-        if (itens.size() == 0) {
-            throw new SistVendasException(SistVendasException.Causa.PRODUTO_NAO_CADASTRADO_ESTOQUE);
-        } else {
-            ItemEstoque it = (ItemEstoque) itens.toArray()[0];
-            it.entrada(qtdade);
-        }
-    }
-
     public void chegadaDeProdutos(List<ItemEstoque> itens) {
         itens.forEach((item) -> {
             Collection<ItemEstoque> itensEstoque = estoque.todos();
@@ -113,21 +102,12 @@ public class ServicoDeEstoque {
         }
     }
 
-    public void saidaDeProdutos(List<ItemVenda> itens){
-        itens.forEach(it->saidaDeProduto(it.getCodigoProduto(),it.getQuantidade()));
-    }
-
     public ItemEstoque recupera(Long codigoProduto) {
         Collection<ItemEstoque> itens = estoque.pesquisa(ie -> ie.getCodigoProduto() == codigoProduto);
         if (itens.size() == 0) {
             throw new SistVendasException(SistVendasException.Causa.PRODUTO_NAO_CADASTRADO_ESTOQUE);
         }
         return (ItemEstoque) itens.toArray()[0];
-    }
-
-    public boolean disponivel(Long codProd, int quantidade) {
-        ItemEstoque it = recupera(codProd);
-        return it.disponivel(quantidade);
     }
 
     public boolean disponivelEmEstoque(Long nroItem, Long codProd, int quantidade) {
