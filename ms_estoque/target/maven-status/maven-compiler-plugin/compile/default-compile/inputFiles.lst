@@ -26,6 +26,7 @@ D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Negocio\Repositorio\IV
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Negocio\Entidades\Produto\Produto.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Negocio\Servicos\IRegraImposto.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\Persistencia\Vendas\ItensH2BD_ITF.java
+D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\ListaItemsDisponiveisParaVendaUC.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\Validacao\ValidacaoForaHorarioComercial.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\Imposto\RegraImpostoComprasGrandes.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\InjecaoConfig\ConfiguradorImpostos.java

@@ -65,8 +65,8 @@ public class ServicoDeEstoque {
                 }
             }
             if(!existe) {
-                System.out.println("DEU ERRO!");
-                throw new SistVendasException(SistVendasException.Causa.PRODUTO_NAO_CADASTRADO_ESTOQUE);
+                System.out.println("\n\nCadastrando novo produto!");
+                cadastra(item.getCodigoProduto(), item.getQuantidade());
             }
         });
     } 
@@ -96,6 +96,14 @@ public class ServicoDeEstoque {
     public boolean disponivel(Long codProd, int quantidade) {
         ItemEstoque it = recupera(codProd);
         return it.disponivel(quantidade);
+    }
+
+    public Collection<ItemEstoque> disponiveis() {
+        Collection<ItemEstoque> itens = estoque.todos();
+        
+        itens.removeIf(i -> i.getQuantidade() <= 0);
+        
+        return itens;
     }
 
     // DEBUG // DEBUG // DEBUG // DEBUG // DEBUG // DEBUG
