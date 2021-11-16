@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = {"com.bcopstein"})
 @EnableJpaRepositories(basePackages = {"com.bcopstein"})
 @EntityScan(basePackages = {"com.bcopstein"}) 
-public class SvBkEt8Application {
+public class VendasApplication {
   public static void main(String[] args) {
-    SpringApplication.run(SvBkEt8Application.class, args);
+    SpringApplication.run(VendasApplication.class, args);
   }
 }

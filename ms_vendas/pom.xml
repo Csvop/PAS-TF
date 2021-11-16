@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bcopstein</groupId>
-	<artifactId>SvBkEt6</artifactId>
+	<artifactId>MS_Venda</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SvBkEt6</name>
-	<description>Sistema de vendas - Etapa 6</description>
+	<name>MS_Venda</name>
+	<description>Sistema de vendas -  Microservico de Vendas</description>
 
 	<properties>
 		<java.version>14</java.version>

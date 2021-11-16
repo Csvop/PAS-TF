@@ -47,6 +47,30 @@ public class ServicoDeEstoque {
         }
     }
 
+    public void chegadaDeProdutos(List<ItemEstoque> itens) {
+        itens.forEach((item) -> {
+            Collection<ItemEstoque> itensEstoque = estoque.todos();
+            boolean existe = false;
+            for(ItemEstoque itemEstoque : itensEstoque) {
+                if(itemEstoque.getNroItem() == item.getNroItem() && itemEstoque.getCodigoProduto() == item.getCodigoProduto()) {
+                    System.out.println("\nAtualizando a quantidade no estoque:\nQuantidade Antes -> "+itemEstoque.getQuantidade());
+
+                    itemEstoque.entrada(item.getQuantidade());
+                    existe = true;
+
+                    //Atualiza o item
+                    estoque.atualiza(itemEstoque);
+
+                    System.out.println("Quantidade Depois -> "+itemEstoque.getQuantidade());
+                }
+            }
+            if(!existe) {
+                System.out.println("DEU ERRO!");
+                throw new SistVendasException(SistVendasException.Causa.PRODUTO_NAO_CADASTRADO_ESTOQUE);
+            }
+        });
+    } 
+
     public void saidaDeProduto(Long codigoProduto, int qtdade) {
         Collection<ItemEstoque> itens = estoque.pesquisa(ie -> ie.getCodigoProduto() == codigoProduto);
         if (itens.size() == 0) {
@@ -73,4 +97,10 @@ public class ServicoDeEstoque {
         ItemEstoque it = recupera(codProd);
         return it.disponivel(quantidade);
     }
+
+    // DEBUG // DEBUG // DEBUG // DEBUG // DEBUG // DEBUG
+    public Collection<ItemEstoque> listaTodos() {
+        return estoque.todos();
+    }
+    // DEBUG // DEBUG // DEBUG // DEBUG // DEBUG // DEBUG
 }

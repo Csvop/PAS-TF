@@ -1,13 +1,13 @@
 package com.bcopstein.Interface;
 
 import java.util.Collection;
+import java.util.List;
 
-import com.bcopstein.Aplicacao.CasosDeUso.ListarProdutosUC;
-import com.bcopstein.Aplicacao.CasosDeUso.VerificaQuantidadeUC;
-import com.bcopstein.Negocio.Entidades.Produto.Produto;
+import com.bcopstein.Aplicacao.CasosDeUso.ChegadaDeProdutosUC;
+import com.bcopstein.Aplicacao.CasosDeUso.ListaTodosItemsUC;
+import com.bcopstein.Negocio.Entidades.ItemEstoque.ItemEstoque;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,26 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/estoque")
 public class EstoqueController {
-  private ListarProdutosUC listarProdutosUC;
-  private VerificaQuantidadeUC verificaQuantidadeUC;
+  // DEBUG
+  ListaTodosItemsUC listaTodosItemsUC;
+  // DEBUG
+
+  ChegadaDeProdutosUC chegadaDeProdutosUC;
 
   @Autowired
-  public EstoqueController(ListarProdutosUC listarProdutosUC, VerificaQuantidadeUC verificaQuantidadeUC) {
-    this.listarProdutosUC = listarProdutosUC;
-    this.verificaQuantidadeUC = verificaQuantidadeUC;
+  public EstoqueController(ChegadaDeProdutosUC chegadaDeProdutosUC, ListaTodosItemsUC listaTodosItemsUC) {
+    this.chegadaDeProdutosUC = chegadaDeProdutosUC;
+    this.listaTodosItemsUC = listaTodosItemsUC;
   }
 
-  @GetMapping("/produtos")
-  @CrossOrigin(origins = "*")
-  public Collection<Produto> listaProdutos() {
-    return listarProdutosUC.execute();
+  //Por motivos de debug
+  // DEBUG// DEBUG // DEBUG// DEBUG // DEBUG// DEBUG // DEBUG
+  // DEBUG// DEBUG // DEBUG// DEBUG // DEBUG// DEBUG // DEBUG
+  @GetMapping("/todos")
+  public Collection<ItemEstoque> todos() {
+    return listaTodosItemsUC.execute();
   }
+  // DEBUG// DEBUG // DEBUG // DEBUG // DEBUG// DEBUG // DEBUG
+  // DEBUG// DEBUG // DEBUG// DEBUG // DEBUG// DEBUG // DEBUG
 
-  //Deve retornar se existe a quantidade demandada do produto em estoque
-  //True == Valido / False == Invalido
-  @PostMapping("/produto")
-  @CrossOrigin(origins = "*")
-  public boolean existeQuantidadeDeProduto(@RequestBody long codigo, @RequestBody int quantidade) {
-    return verificaQuantidadeUC.verificaQuantidade(codigo, quantidade);
+  @PostMapping("/chegada")
+  public boolean chegadaDeProdutos(@RequestBody List<ItemEstoque> itens) {
+    	return chegadaDeProdutosUC.execute(itens);
   }
 }
