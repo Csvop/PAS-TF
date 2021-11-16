@@ -98,6 +98,19 @@ public class ServicoDeEstoque {
         return it.disponivel(quantidade);
     }
 
+    public boolean disponivelEmEstoque(Long nroItem, Long codProd, int quantidade) {
+        Collection<ItemEstoque> itens = estoque.todos();
+        boolean res = false;
+
+        for(ItemEstoque itemEstoque : itens) {
+            if(itemEstoque.getNroItem() == nroItem && itemEstoque.getCodigoProduto() == codProd) {
+                res = itemEstoque.disponivel(quantidade);
+            }
+        }
+
+        return res;
+    }
+   
     public Collection<ItemEstoque> disponiveis() {
         Collection<ItemEstoque> itens = estoque.todos();
         
