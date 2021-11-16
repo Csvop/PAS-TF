@@ -25,23 +25,29 @@ public class ServicoDeEstoque {
     }
 
     public boolean baixa(Collection<ItemEstoque> itens) {
+        Collection<ItemEstoque> itensBD = estoque.todos();
         Collection<ItemEstoque> validos = new ArrayList<>();
 
-        disponiveis().forEach((item) -> {
-            if(item.disponivel(item.getQuantidade())) {
-                validos.add(item);
+        for (ItemEstoque itemBD : itensBD) {
+            for(ItemEstoque item : itens) {
+                if(item.getNroItem() == itemBD.getNroItem()
+                && item.getCodigoProduto() == itemBD.getCodigoProduto()) {
+                    validos.add(itemBD);
+                }
             }
-        });
+        }
 
-        if(itens.size() == validos.size()) {
-
-            validos.forEach((item) -> {
-                int qnt = item.getQuantidade();
-                item.saida(qnt);
-                
-                //Atualiza o item
-                estoque.atualiza(item);
-            });
+        if(validos.size() == itens.size()) {
+            
+            for (ItemEstoque itemBD : itensBD) {
+                for(ItemEstoque item : itens) {
+                    if(item.getNroItem() == itemBD.getNroItem()
+                    && item.getCodigoProduto() == itemBD.getCodigoProduto()) {
+                        itemBD.saida(item.getQuantidade());
+                        estoque.atualiza(itemBD);
+                    }
+                }
+            }
 
             return true;
         } else {

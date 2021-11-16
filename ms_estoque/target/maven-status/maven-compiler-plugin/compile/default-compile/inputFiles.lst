@@ -18,6 +18,7 @@ D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\Persistencia
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\Validacao\ValidacaoHorarioComercial.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\ListaTodosItemsUC.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\Persistencia\Vendas\VendasH2BD_IMPL.java
+D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\BaixaDeProdutoUC.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\Persistencia\Estoque\EstoqueH2BD_IMPL.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\Imposto\RegraImpostoOriginal.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\Persistencia\Vendas\VendasImpl.java
