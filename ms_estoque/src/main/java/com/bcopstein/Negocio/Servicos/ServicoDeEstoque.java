@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.bcopstein.Negocio.Entidades.ItemEstoque.ItemEstoque;
+import com.bcopstein.Negocio.Entidades.Produto.Produto;
 import com.bcopstein.Negocio.Exception.SistVendasException;
 import com.bcopstein.Negocio.Repositorio.IEstoque;
 import com.bcopstein.Negocio.Repositorio.IProdutos;
@@ -110,12 +111,12 @@ public class ServicoDeEstoque {
         return (ItemEstoque) itens.toArray()[0];
     }
 
-    public boolean disponivelEmEstoque(Long nroItem, Long codProd, int quantidade) {
+    public boolean disponivelEmEstoque(Long codProd, int quantidade) {
         Collection<ItemEstoque> itens = estoque.todos();
         boolean res = false;
 
         for(ItemEstoque itemEstoque : itens) {
-            if(itemEstoque.getNroItem() == nroItem && itemEstoque.getCodigoProduto() == codProd) {
+            if(itemEstoque.getCodigoProduto() == codProd) {
                 res = itemEstoque.disponivel(quantidade);
             }
         }
@@ -123,12 +124,21 @@ public class ServicoDeEstoque {
         return res;
     }
    
-    public Collection<ItemEstoque> disponiveis() {
+    public Collection<Produto> disponiveis() {
         Collection<ItemEstoque> itens = estoque.todos();
         
         itens.removeIf(i -> i.getQuantidade() <= 0);
+
+        Collection<Produto> prods = new ArrayList<>();
+        produtos.todos().forEach((prod) -> {
+            itens.forEach((item) -> {
+                if(item.getCodigoProduto() == prod.getCodigo()) {
+                    prods.add(prod);
+                }
+            });
+        });
         
-        return itens;
+        return prods;
     }
 
     // DEBUG // DEBUG // DEBUG // DEBUG // DEBUG // DEBUG

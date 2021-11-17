@@ -70,7 +70,7 @@ class ServicoDeVendas {
   }
 
   async getProdutos() {
-    const url = this.baseUrl + "/vendas/produtos";
+    const url = this.baseUrl + "/estoque/produtos";
     const produtos = [];
 
     try {

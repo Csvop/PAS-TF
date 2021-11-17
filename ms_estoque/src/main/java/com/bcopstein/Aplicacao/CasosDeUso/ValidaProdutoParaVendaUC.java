@@ -14,7 +14,7 @@ public class ValidaProdutoParaVendaUC {
         this.servicoDeEstoque = servicoDeEstoque;
     }
 
-    public boolean execute(long nroItem, long codigoProduto, int quantidade) {
-        return servicoDeEstoque.disponivelEmEstoque(nroItem, codigoProduto, quantidade);
+    public boolean execute(long codigoProduto, int quantidade) {
+        return servicoDeEstoque.disponivelEmEstoque(codigoProduto, quantidade);
     }
 }
