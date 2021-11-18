@@ -28,9 +28,13 @@ public class ItemEstoque {
     protected ItemEstoque(){}
     
     public ItemEstoque(Long nroItem,Long codigoProduto, int quantidade) {
-        this.nroItem = nroItem;
-        this.codigoProduto = codigoProduto;
-        this.quantidade = quantidade;
+        if (quantidade < 0) {
+            throw new SistVendasException(SistVendasException.Causa.QUANTIDADE_INVALIDA);
+        } else {
+            this.codigoProduto = codigoProduto;
+            this.quantidade = quantidade;
+            this.nroItem = nroItem;
+        }
     }
 
 

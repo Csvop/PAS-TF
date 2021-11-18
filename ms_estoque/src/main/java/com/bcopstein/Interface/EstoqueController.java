@@ -1,6 +1,5 @@
 package com.bcopstein.Interface;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,9 +8,7 @@ import com.bcopstein.Aplicacao.CasosDeUso.ChegadaDeProdutosUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ListaItemsDisponiveisParaVendaUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ListaTodosItemsUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ValidaProdutoParaVendaUC;
-import com.bcopstein.Interface.DTO.ProdutoDTO;
 import com.bcopstein.Negocio.Entidades.ItemEstoque.ItemEstoque;
-import com.bcopstein.Negocio.Entidades.Produto.Produto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,15 +61,8 @@ public class EstoqueController {
   // Produtos vendidos:
   // Deve retornar à relação de produtos disponíveis para venda.
   @GetMapping("/produtos")
-  public Collection<ProdutoDTO> disponiveisParaVenda() {
-    //return listaItemsDisponiveisParaVendaUC.execute();
-    Collection<ProdutoDTO> produtos = new ArrayList<>();
-
-    ProdutoDTO p = new ProdutoDTO( (long) 1, "Produto 1", 10.0, 1);
-
-    produtos.add(p);
-
-    return produtos;
+  public Collection<ItemEstoque> disponiveisParaVenda() {
+    return listaItemsDisponiveisParaVendaUC.execute();
   }
 
   // Produtos em estoque:

@@ -2,7 +2,7 @@ package com.bcopstein.Aplicacao.CasosDeUso;
 
 import java.util.Collection;
 
-import com.bcopstein.Negocio.Entidades.Produto.Produto;
+import com.bcopstein.Negocio.Entidades.ItemEstoque.ItemEstoque;
 import com.bcopstein.Negocio.Servicos.ServicoDeEstoque;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class ListaItemsDisponiveisParaVendaUC {
         this.servicoDeEstoque = servicoDeEstoque;
     }
 
-    public Collection<Produto> execute() {
+    public Collection<ItemEstoque> execute() {
         return servicoDeEstoque.disponiveis();
     }
 }

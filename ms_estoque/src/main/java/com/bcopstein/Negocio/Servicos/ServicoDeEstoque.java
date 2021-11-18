@@ -5,22 +5,18 @@ import java.util.Collection;
 import java.util.List;
 
 import com.bcopstein.Negocio.Entidades.ItemEstoque.ItemEstoque;
-import com.bcopstein.Negocio.Entidades.Produto.Produto;
 import com.bcopstein.Negocio.Exception.SistVendasException;
 import com.bcopstein.Negocio.Repositorio.IEstoque;
-import com.bcopstein.Negocio.Repositorio.IProdutos;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ServicoDeEstoque {
-    private IProdutos produtos;
     private IEstoque estoque;
 
     @Autowired
-    public ServicoDeEstoque(IProdutos produtos, IEstoque estoque) {
-        this.produtos = produtos;
+    public ServicoDeEstoque(IEstoque estoque) {
         this.estoque = estoque;
     }
 
@@ -55,20 +51,6 @@ public class ServicoDeEstoque {
         }
     }
 
-    public void cadastra(Long codigoProduto, int quantidade) {
-        if (quantidade < 0) {
-            throw new SistVendasException(SistVendasException.Causa.QUANTIDADE_INVALIDA);
-        }
-        if (!produtos.existente(codigoProduto)) {
-            throw new SistVendasException(SistVendasException.Causa.PRODUTO_INEXISTENTE);
-        }
-        if (estoque.existente(codigoProduto)) {
-            throw new SistVendasException(SistVendasException.Causa.CODIGO_DUPLICADO);
-        }
-        ItemEstoque it = new ItemEstoque(codigoProduto, quantidade);
-        estoque.cadastra(it);
-    }
-
     public void chegadaDeProdutos(List<ItemEstoque> itens) {
         itens.forEach((item) -> {
             Collection<ItemEstoque> itensEstoque = estoque.todos();
@@ -88,7 +70,15 @@ public class ServicoDeEstoque {
             }
             if(!existe) {
                 System.out.println("\n\nCadastrando novo produto!");
-                cadastra(item.getCodigoProduto(), item.getQuantidade());
+
+                long maior = 0;
+                for(ItemEstoque itemEstoque : itensEstoque) {
+                    if(itemEstoque.getNroItem() > maior) {
+                        maior = itemEstoque.getNroItem();
+                    }
+                }
+
+                estoque.cadastra(new ItemEstoque(maior+1, item.getCodigoProduto(), item.getQuantidade()));
             }
         });
     } 
@@ -101,14 +91,6 @@ public class ServicoDeEstoque {
             ItemEstoque it = (ItemEstoque) itens.toArray()[0];
             it.saida(qtdade);
         }
-    }
-
-    public ItemEstoque recupera(Long codigoProduto) {
-        Collection<ItemEstoque> itens = estoque.pesquisa(ie -> ie.getCodigoProduto() == codigoProduto);
-        if (itens.size() == 0) {
-            throw new SistVendasException(SistVendasException.Causa.PRODUTO_NAO_CADASTRADO_ESTOQUE);
-        }
-        return (ItemEstoque) itens.toArray()[0];
     }
 
     public boolean disponivelEmEstoque(Long codProd, int quantidade) {
@@ -124,21 +106,12 @@ public class ServicoDeEstoque {
         return res;
     }
    
-    public Collection<Produto> disponiveis() {
+    public Collection<ItemEstoque> disponiveis() {
         Collection<ItemEstoque> itens = estoque.todos();
         
         itens.removeIf(i -> i.getQuantidade() <= 0);
-
-        Collection<Produto> prods = new ArrayList<>();
-        produtos.todos().forEach((prod) -> {
-            itens.forEach((item) -> {
-                if(item.getCodigoProduto() == prod.getCodigo()) {
-                    prods.add(prod);
-                }
-            });
-        });
         
-        return prods;
+        return itens;
     }
 
     // DEBUG // DEBUG // DEBUG // DEBUG // DEBUG // DEBUG

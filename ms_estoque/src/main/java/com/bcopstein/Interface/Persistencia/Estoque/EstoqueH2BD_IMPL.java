@@ -8,20 +8,17 @@ import java.util.stream.Collectors;
 import com.bcopstein.Negocio.Entidades.ItemEstoque.ItemEstoque;
 import com.bcopstein.Negocio.Exception.SistVendasException;
 import com.bcopstein.Negocio.Repositorio.IEstoque;
-import com.bcopstein.Negocio.Repositorio.IProdutos;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EstoqueH2BD_IMPL implements IEstoque {
-    private IProdutos produtos;
     private EstoqueH2BD_ITF estoque;
 
     @Autowired
-    public EstoqueH2BD_IMPL(EstoqueH2BD_ITF estoque,IProdutos produtos) {
+    public EstoqueH2BD_IMPL(EstoqueH2BD_ITF estoque) {
         this.estoque = estoque;
-        this.produtos = produtos;
     }
 
     @Override
@@ -37,13 +34,9 @@ public class EstoqueH2BD_IMPL implements IEstoque {
     @Override
     public void cadastra(ItemEstoque item) {
         // Garante que produto existe no repositório
-        if (produtos.existente(item.getCodigoProduto())) { 
-            if (estoque.findByCodigoProduto(item.getCodigoProduto()).size() != 0) { 
-                throw new SistVendasException(SistVendasException.Causa.CODIGO_DUPLICADO); 
-            } 
-        } else { 
-            throw new SistVendasException(SistVendasException.Causa.PRODUTO_INEXISTENTE); 
-        }
+        if (estoque.findByCodigoProduto(item.getCodigoProduto()).size() != 0) { 
+            throw new SistVendasException(SistVendasException.Causa.CODIGO_DUPLICADO); 
+        } 
         
         // Insere produto no estoque
         estoque.save(item); 
