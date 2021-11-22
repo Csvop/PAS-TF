@@ -3,17 +3,12 @@ D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\B
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\Persistencia\Estoque\EstoqueH2BD_IMPL.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Negocio\Exception\SistVendasException.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Negocio\Servicos\ServicoDeEstoque.java
-D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Negocio\Entidades\Produto\Produto.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\ValidaProdutoParaVendaUC.java
-D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\DTO\ProdutoDTO.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\ListaItemsDisponiveisParaVendaUC.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Negocio\Repositorio\IRepositorio.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\EstoqueController.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\Persistencia\Estoque\EstoqueH2BD_ITF.java
-D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Negocio\Repositorio\IProdutos.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Negocio\Repositorio\IEstoque.java
-D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\Persistencia\Produtos\ProdutosH2BD_ITF.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\EstoqueApplication.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Negocio\Entidades\ItemEstoque\ItemEstoque.java
 D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\ChegadaDeProdutosUC.java
-D:\Projetos\PAS-TF\ms_estoque\src\main\java\com\bcopstein\Interface\Persistencia\Produtos\ProdutosH2BD_IMPL.java
