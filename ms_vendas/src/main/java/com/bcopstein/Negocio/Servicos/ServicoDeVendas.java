@@ -25,10 +25,6 @@ public class ServicoDeVendas {
         vendas.cadastra(venda);
     }
 
-    public Collection<Venda> todas(){
-        return vendas.todos();
-    }
-
     public Integer calculaSubtotal(List<ItemVenda> itens) {
         return (int) (itens.stream().mapToDouble(it -> it.getValorVendido() * it.getQuantidade()).sum());
     }
@@ -47,5 +43,9 @@ public class ServicoDeVendas {
         valores[1] = calculaImpostos(itens);
         valores[2] = calculaPrecoFinal(itens);
         return valores;
+    }
+
+    public Collection<Venda> listaVendas() {
+        return vendas.todos();
     }
 }

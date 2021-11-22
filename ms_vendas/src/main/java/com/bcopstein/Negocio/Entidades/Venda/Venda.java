@@ -16,7 +16,7 @@ public class Venda {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long codigo;
-  private LocalDate data;
+  private LocalDate dataVenda;
 
   @OneToMany(
         cascade = CascadeType.ALL,
@@ -29,7 +29,7 @@ public class Venda {
   private boolean fechada;
 
   public Venda() {
-    this.data = LocalDate.now();
+    this.dataVenda = LocalDate.now();
     this.itens = new LinkedList<>();
     this.subtotal = 0.0;
     this.impostos = 0.0;
@@ -45,8 +45,8 @@ public class Venda {
     this.codigo = codigo;
   }
 
-  public LocalDate getData() {
-    return data;
+  public LocalDate getDataVenda() {
+    return dataVenda;
   }
 
   public List<ItemVenda> getItens(){
@@ -86,7 +86,7 @@ public class Venda {
 
   @Override
   public String toString() {
-    return "Venda [codigo=" + codigo + ", data=" + data + ", fechada=" + fechada + ", impostos=" + impostos + ", itens="
+    return "Venda [codigo=" + codigo + ", dataVenda=" + dataVenda + ", fechada=" + fechada + ", impostos=" + impostos + ", itens="
         + itens.toString() + ", subtotal=" + subtotal + ", valorFinal=" + valorFinal + "]";
   }
   
