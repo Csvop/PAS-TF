@@ -69,7 +69,7 @@ public class EstoqueController {
   // Deve retornar se existe a quantidade demandada de um produto no estoque.
   // True == existe a quantidade demandada no estoque.
   // False == não existe a quantidade demandada no estoque.
-  @GetMapping("/verificaDisponivel/nro/{nroItem}/cod/{codigoProduto}/qnt/{quantidade}")
+  @GetMapping("/verificaDisponivel/cod/{codigoProduto}/qnt/{quantidade}")
   public boolean produtoDisponivel(@PathVariable long codigoProduto, @PathVariable int quantidade) {
     return validaProdutoParaVendaUC.execute(codigoProduto, quantidade);
   }

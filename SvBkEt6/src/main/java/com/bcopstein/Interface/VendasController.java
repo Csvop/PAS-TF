@@ -7,7 +7,6 @@ import com.bcopstein.Aplicacao.CasosDeUso.CalculaSubtotalUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ConfirmaVendaUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ListaVendasEfetuadasUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ListarProdutosUC;
-import com.bcopstein.Aplicacao.CasosDeUso.PodeVenderUC;
 import com.bcopstein.Interface.DTO.ItemCarrinhoDTO;
 import com.bcopstein.Interface.DTO.MapeadorItemCarrinho;
 import com.bcopstein.Negocio.Entidades.Produto.Produto;
@@ -28,21 +27,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class VendasController {
   private MapeadorItemCarrinho mapeadorIC;
   private ListarProdutosUC listarProdutosUC;
-  private PodeVenderUC podeVenderUC;
   private CalculaSubtotalUC calculaSubtotalUC;
   private ListaVendasEfetuadasUC listaVendasEfetuadasUC;
   private ConfirmaVendaUC confirmaVendaUC;
 
   @Autowired
+  private EstoqueProxy estoqueProxy;
+
+  @Autowired
   public VendasController(ListarProdutosUC listarProdutosUC,
-                          PodeVenderUC podeVenderUC,
                           CalculaSubtotalUC calculaSubtotalUC,
                           ListaVendasEfetuadasUC listaVendasEfetuadasUC,
                           ConfirmaVendaUC confirmaVendaUC,
                           MapeadorItemCarrinho mapeadorIC) {
     this.mapeadorIC = mapeadorIC;
     this.listarProdutosUC = listarProdutosUC;
-    this.podeVenderUC = podeVenderUC;
     this.calculaSubtotalUC = calculaSubtotalUC;
     this.listaVendasEfetuadasUC = listaVendasEfetuadasUC;
     this.confirmaVendaUC = confirmaVendaUC;
@@ -58,7 +57,7 @@ public class VendasController {
   @CrossOrigin(origins = "*")
   public boolean podeVender(@RequestParam final Integer codProd,
                             @RequestParam final Integer qtdade) {
-      return podeVenderUC.execute(codProd, qtdade);
+    return estoqueProxy.disponivel(codProd, qtdade);
   }
 
   @PostMapping("/confirmacao")
