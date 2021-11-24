@@ -1,0 +1,75 @@
+version: '3.7'
+
+services: 
+
+  name-server:
+    image: nameserver
+    mem_limit: '700m'
+    ports:
+      - "8761:8761"
+    networks:
+      - backend-network
+
+  ms-estoque:
+    image: estoque
+    mem_limit: 700m
+    ports:
+      - "8000:8000"
+    networks:
+      - backend-network
+    depends_on:
+      - name-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+
+  ms-nota-fiscal:
+    image: nota-fiscal
+    mem_limit: 700m
+    ports:
+      - "8100:8100"
+    networks:
+      - backend-network
+    depends_on:
+      - name-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+
+  backend:
+    image: backend
+    mem_limit: 700m
+    ports:
+      - "8080:8080"
+    networks:
+      - backend-network
+    depends_on:
+      - ms-estoque
+      - ms-nota-fiscal
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      
+  api-gateway:
+    image: gateway
+    mem_limit: 700m
+    ports:
+      - "8765:8765"
+    networks:
+      - backend-network
+    depends_on:
+      - backend
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+
+  zipkin-server: 
+    image: openzipkin/zipkin
+    mem_limit: 300m 
+    ports: 
+      - "9411:9411" 
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
