@@ -1,27 +1,32 @@
 package com.bcopstein.Aplicacao.CasosDeUso;
 
-import com.bcopstein.Negocio.Servicos.ServicoDeEstoque;
 import com.bcopstein.Negocio.Servicos.ServicoDeVendas;
 import com.bcopstein.Negocio.Entidades.Venda.ItemVenda;
 import com.bcopstein.Negocio.Repositorio.IProdutos;
 import com.bcopstein.Aplicacao.Validacao.FactoryValidacao;
+import com.bcopstein.Interface.EstoqueProxy;
+import com.bcopstein.Interface.DTO.ItemEstoqueDTO;
 import com.bcopstein.Negocio.Entidades.Venda.Venda;
 import com.bcopstein.Negocio.Exception.SistVendasException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Component
 public class ConfirmaVendaUC {
-    private ServicoDeEstoque servicoDeEstoque;
     private ServicoDeVendas servicoDeVendas;
     private IProdutos produtos;
     private FactoryValidacao factoryValidacao;
 
+    @Autowired
+    EstoqueProxy estoque;
+
     @Autowired 
-    public ConfirmaVendaUC(IProdutos produtos,FactoryValidacao factoryValidacao,ServicoDeEstoque servicoDeEstoque, ServicoDeVendas servicoDeVendas) {
-        this.servicoDeEstoque = servicoDeEstoque;
+    public ConfirmaVendaUC(IProdutos produtos,FactoryValidacao factoryValidacao, ServicoDeVendas servicoDeVendas) {
         this.servicoDeVendas = servicoDeVendas;
         this.produtos = produtos;
         this.factoryValidacao = factoryValidacao;
@@ -30,15 +35,27 @@ public class ConfirmaVendaUC {
     public boolean execute(final List<ItemVenda> itensVenda) {
         // Verifica se todos os itens são válidos
         try{
-          factoryValidacao.getRegraValidacao().valida(produtos, servicoDeEstoque, itensVenda);
+          factoryValidacao.getRegraValidacao().valida(produtos, itensVenda, estoque);
         }catch(SistVendasException s){
           return false;
         }
+
         // Cria a venda
         Venda venda = new Venda();
         venda.addItens(itensVenda);
+
+        // Transformando de ItemVenda para ItemEstoqueDTO
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        Collection<ItemEstoqueDTO> itensEstoque = new ArrayList<>();
+        itensVenda.forEach((item) -> {
+            System.out.println("nro" + (long) item.getNro() + " cod" + item.getCodigoProduto() + " qnt" + item.getQuantidade());
+            itensEstoque.add(new ItemEstoqueDTO((long) item.getNro(), item.getCodigoProduto(), item.getQuantidade()));
+        });
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
         // Dá baixa no estoque
-        servicoDeEstoque.saidaDeProdutos(itensVenda);    
+        estoque.saidaDeProdutos(itensEstoque);    
+
         // Fecha a venda
         venda.fechaVenda(servicoDeVendas.calculaSubtotal(itensVenda),
                          servicoDeVendas.calculaImpostos(itensVenda),

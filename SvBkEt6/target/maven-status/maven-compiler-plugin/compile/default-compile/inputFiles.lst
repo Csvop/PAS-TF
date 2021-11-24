@@ -3,10 +3,8 @@ D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Aplicacao\Validacao\Facto
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\VendasController.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Negocio\Repositorio\IProdutos.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Negocio\Exception\SistVendasException.java
-D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\Persistencia\Estoque\EstoqueH2BD_IMPL.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Negocio\Servicos\IRegraImposto.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Aplicacao\Imposto\RegraImpostoOriginal.java
-D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\Persistencia\Estoque\EstoqueH2BD_ITF.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Negocio\Servicos\ServicoDeVendas.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\CalculaSubtotalUC.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\Persistencia\Vendas\VendasH2BD_ITF.java
@@ -23,15 +21,12 @@ D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\Conf
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\DTO\MapeadorItemCarrinho.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\EstoqueProxy.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\Persistencia\Produtos\ProdutosH2BD_ITF.java
-D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Negocio\Repositorio\IEstoque.java
-D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Negocio\Entidades\ItemEstoque\ItemEstoque.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\Persistencia\Vendas\ItensH2BD_ITF.java
-D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Negocio\Servicos\ServicoDeEstoque.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Negocio\Entidades\Venda\ItemVenda.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\ListarProdutosUC.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\Persistencia\Produtos\ProdutosH2BD_IMPL.java
+D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\DTO\ItemEstoqueDTO.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\Persistencia\Vendas\VendasH2BD_IMPL.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\ListaVendasEfetuadasUC.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Interface\DTO\ItemCarrinhoDTO.java
-D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\PodeVenderUC.java
 D:\Projetos\PAS-TF\SvBkEt6\src\main\java\com\bcopstein\Negocio\Entidades\Produto\Produto.java
