@@ -11,6 +11,7 @@ public class ApiGatewayConfiguration {
     public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(p -> p.path("/estoque/**").uri("lb://estoque"))
+                .route(p -> p.path("/vendas/**").uri("lb://vendas"))
                 .route(p -> p.path("/nota-fiscal/**").uri("lb://nota-fiscal")).build();
     }
 }
