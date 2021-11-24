@@ -28,8 +28,10 @@ public class VendasController {
   private MapeadorItemCarrinho mapeadorIC;
   private ListarProdutosUC listarProdutosUC;
   private CalculaSubtotalUC calculaSubtotalUC;
-  private ListaVendasEfetuadasUC listaVendasEfetuadasUC;
   private ConfirmaVendaUC confirmaVendaUC;
+
+  @Autowired
+  private NotaFiscalProxy notaFiscalProxy;
 
   @Autowired
   private EstoqueProxy estoqueProxy;
@@ -37,13 +39,11 @@ public class VendasController {
   @Autowired
   public VendasController(ListarProdutosUC listarProdutosUC,
                           CalculaSubtotalUC calculaSubtotalUC,
-                          ListaVendasEfetuadasUC listaVendasEfetuadasUC,
                           ConfirmaVendaUC confirmaVendaUC,
                           MapeadorItemCarrinho mapeadorIC) {
     this.mapeadorIC = mapeadorIC;
     this.listarProdutosUC = listarProdutosUC;
     this.calculaSubtotalUC = calculaSubtotalUC;
-    this.listaVendasEfetuadasUC = listaVendasEfetuadasUC;
     this.confirmaVendaUC = confirmaVendaUC;
   }
 
@@ -70,8 +70,7 @@ public class VendasController {
   @GetMapping("/historico")
   @CrossOrigin(origins = "*")
   public Collection<Venda> vendasEfetuadas() {
-    Collection<Venda> aux =  listaVendasEfetuadasUC.execute();
-    return aux;
+    return notaFiscalProxy.listaVendas();
   }
 
   @PostMapping("/subtotal")

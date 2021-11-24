@@ -5,6 +5,7 @@ import com.bcopstein.Negocio.Entidades.Venda.ItemVenda;
 import com.bcopstein.Negocio.Repositorio.IProdutos;
 import com.bcopstein.Aplicacao.Validacao.FactoryValidacao;
 import com.bcopstein.Interface.EstoqueProxy;
+import com.bcopstein.Interface.NotaFiscalProxy;
 import com.bcopstein.Interface.DTO.ItemEstoqueDTO;
 import com.bcopstein.Negocio.Entidades.Venda.Venda;
 import com.bcopstein.Negocio.Exception.SistVendasException;
@@ -24,6 +25,9 @@ public class ConfirmaVendaUC {
 
     @Autowired
     EstoqueProxy estoque;
+
+    @Autowired
+    NotaFiscalProxy notaFiscal;
 
     @Autowired 
     public ConfirmaVendaUC(IProdutos produtos,FactoryValidacao factoryValidacao, ServicoDeVendas servicoDeVendas) {
@@ -45,13 +49,10 @@ public class ConfirmaVendaUC {
         venda.addItens(itensVenda);
 
         // Transformando de ItemVenda para ItemEstoqueDTO
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
         Collection<ItemEstoqueDTO> itensEstoque = new ArrayList<>();
         itensVenda.forEach((item) -> {
-            System.out.println("nro" + (long) item.getNro() + " cod" + item.getCodigoProduto() + " qnt" + item.getQuantidade());
             itensEstoque.add(new ItemEstoqueDTO((long) item.getNro(), item.getCodigoProduto(), item.getQuantidade()));
         });
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
         // Dá baixa no estoque
         estoque.saidaDeProdutos(itensEstoque);    
@@ -61,7 +62,7 @@ public class ConfirmaVendaUC {
                          servicoDeVendas.calculaImpostos(itensVenda),
                          servicoDeVendas.calculaPrecoFinal(itensVenda));
         // Persiste a venda
-        servicoDeVendas.cadastra(venda);
+        notaFiscal.registraVenda(venda);
         return true;
       }
     
