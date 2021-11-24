@@ -7,6 +7,8 @@ services:
     mem_limit: '700m'
     ports:
       - "8761:8761"
+    depends_on:
+      - rabbitmq
     networks:
       - backend-network
 
@@ -19,9 +21,13 @@ services:
       - backend-network
     depends_on:
       - name-server
+      - rabbitmq
     environment:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672 
+      SPRING_RABBITMQ_HOST: rabbitmq 
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
 
   ms-nota-fiscal:
     image: nota-fiscal
@@ -32,9 +38,13 @@ services:
       - backend-network
     depends_on:
       - name-server
+      - rabbitmq
     environment:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672 
+      SPRING_RABBITMQ_HOST: rabbitmq 
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
 
   backend:
     image: backend
@@ -46,9 +56,13 @@ services:
     depends_on:
       - ms-estoque
       - ms-nota-fiscal
+      - rabbitmq
     environment:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672 
+      SPRING_RABBITMQ_HOST: rabbitmq 
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
       
   api-gateway:
     image: gateway
@@ -59,15 +73,33 @@ services:
       - backend-network
     depends_on:
       - backend
+      - rabbitmq
     environment:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672 
+      SPRING_RABBITMQ_HOST: rabbitmq 
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
 
   zipkin-server: 
     image: openzipkin/zipkin
     mem_limit: 300m 
     ports: 
       - "9411:9411" 
+    networks:
+      - backend-network
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq
+    mem_limit: 300m
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - backend-network
 
