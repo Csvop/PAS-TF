@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.bcopstein.Aplicacao.CasosDeUso.CalculaSubtotalUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ConfirmaVendaUC;
-import com.bcopstein.Aplicacao.CasosDeUso.ListaVendasEfetuadasUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ListarProdutosUC;
 import com.bcopstein.Interface.DTO.ItemCarrinhoDTO;
 import com.bcopstein.Interface.DTO.MapeadorItemCarrinho;

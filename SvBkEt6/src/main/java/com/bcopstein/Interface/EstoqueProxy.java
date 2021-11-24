@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name="estoque", url="http://localhost:8000")
+@FeignClient(name="estoque")
 public interface EstoqueProxy {
     
     @GetMapping("/estoque/verificaDisponivel/cod/{codigoProduto}/qnt/{quantidade}")

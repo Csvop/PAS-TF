@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name="nota-fiscal", url="http://localhost:8100")
+@FeignClient(name="nota-fiscal")
 public interface NotaFiscalProxy {
 
     @GetMapping("/nota-fiscal/lista")
