@@ -11,4 +11,5 @@ D:\Projetos\PAS-TF\ms_nota-fiscal\src\main\java\com\bcopstein\Interface\VendasCo
 D:\Projetos\PAS-TF\ms_nota-fiscal\src\main\java\com\bcopstein\Aplicacao\CasosDeUso\RegistraVendaUC.java
 D:\Projetos\PAS-TF\ms_nota-fiscal\src\main\java\com\bcopstein\Negocio\Exception\SistVendasException.java
 D:\Projetos\PAS-TF\ms_nota-fiscal\src\main\java\com\bcopstein\Interface\Persistencia\Vendas\ItensH2BD_ITF.java
+D:\Projetos\PAS-TF\ms_nota-fiscal\src\main\java\com\bcopstein\Interface\Reciver.java
 D:\Projetos\PAS-TF\ms_nota-fiscal\src\main\java\com\bcopstein\VendasApplication.java

@@ -1,3 +1,4 @@
+com\bcopstein\Interface\Reciver.class
 com\bcopstein\Interface\Persistencia\Vendas\ItensH2BD_ITF.class
 com\bcopstein\Interface\Persistencia\Vendas\VendasH2BD_IMPL.class
 com\bcopstein\Interface\VendasController.class

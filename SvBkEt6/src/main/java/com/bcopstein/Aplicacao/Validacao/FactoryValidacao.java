@@ -11,7 +11,7 @@ public class FactoryValidacao {
             LocalTime.parse("18:00").isBefore(LocalTime.now())){
                 return new ValidacaoHorarioComercial();
         }else{
-            return new ValidacaoForaHorarioComercial();
+            return new ValidacaoHorarioComercial();
         }
     } 
 }

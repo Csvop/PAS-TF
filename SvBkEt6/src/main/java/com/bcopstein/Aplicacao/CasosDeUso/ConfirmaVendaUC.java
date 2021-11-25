@@ -1,15 +1,16 @@
 package com.bcopstein.Aplicacao.CasosDeUso;
 
 import com.bcopstein.Negocio.Servicos.ServicoDeVendas;
+import com.google.gson.Gson;
 import com.bcopstein.Negocio.Entidades.Venda.ItemVenda;
 import com.bcopstein.Negocio.Repositorio.IProdutos;
 import com.bcopstein.Aplicacao.Validacao.FactoryValidacao;
 import com.bcopstein.Interface.EstoqueProxy;
-import com.bcopstein.Interface.NotaFiscalProxy;
 import com.bcopstein.Interface.DTO.ItemEstoqueDTO;
 import com.bcopstein.Negocio.Entidades.Venda.Venda;
 import com.bcopstein.Negocio.Exception.SistVendasException;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +24,13 @@ public class ConfirmaVendaUC {
     private IProdutos produtos;
     private FactoryValidacao factoryValidacao;
 
+    Gson gson = new Gson();
+
     @Autowired
     EstoqueProxy estoque;
 
     @Autowired
-    NotaFiscalProxy notaFiscal;
+    RabbitTemplate rabbitTemplate;
 
     @Autowired 
     public ConfirmaVendaUC(IProdutos produtos,FactoryValidacao factoryValidacao, ServicoDeVendas servicoDeVendas) {
@@ -61,8 +64,10 @@ public class ConfirmaVendaUC {
         venda.fechaVenda(servicoDeVendas.calculaSubtotal(itensVenda),
                          servicoDeVendas.calculaImpostos(itensVenda),
                          servicoDeVendas.calculaPrecoFinal(itensVenda));
+
         // Persiste a venda
-        notaFiscal.registraVenda(venda);
+        rabbitTemplate.convertAndSend("spring-boot-nota-fiscal", "venda.nova", gson.toJson(venda));
+
         return true;
       }
     
