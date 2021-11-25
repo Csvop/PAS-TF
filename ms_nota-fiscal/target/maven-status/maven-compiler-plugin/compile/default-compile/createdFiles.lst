@@ -1,0 +1,16 @@
+com\bcopstein\Interface\Reciver.class
+com\bcopstein\Interface\Persistencia\Vendas\ItensH2BD_ITF.class
+com\bcopstein\Interface\Persistencia\Vendas\VendasH2BD_IMPL.class
+com\bcopstein\Interface\VendasController.class
+com\bcopstein\Negocio\Entidades\Venda\ItemVenda.class
+com\bcopstein\Negocio\Entidades\Venda\Venda.class
+com\bcopstein\Interface\Persistencia\Vendas\VendasH2BD_ITF.class
+com\bcopstein\Negocio\Exception\SistVendasException.class
+com\bcopstein\Negocio\Servicos\ServicoDeVendas.class
+com\bcopstein\Interface\Persistencia\Vendas\VendasImpl.class
+com\bcopstein\Negocio\Repositorio\IVendas.class
+com\bcopstein\Aplicacao\CasosDeUso\ListaVendaUC.class
+com\bcopstein\Negocio\Repositorio\IRepositorio.class
+com\bcopstein\VendasApplication.class
+com\bcopstein\Negocio\Exception\SistVendasException$Causa.class
+com\bcopstein\Aplicacao\CasosDeUso\RegistraVendaUC.class

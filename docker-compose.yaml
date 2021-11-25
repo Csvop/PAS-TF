@@ -1,0 +1,107 @@
+version: '3.7'
+
+services: 
+
+  name-server:
+    image: nameserver
+    mem_limit: '700m'
+    ports:
+      - "8761:8761"
+    depends_on:
+      - rabbitmq
+    networks:
+      - backend-network
+
+  ms-estoque:
+    image: estoque
+    mem_limit: 700m
+    ports:
+      - "8000:8000"
+    networks:
+      - backend-network
+    depends_on:
+      - name-server
+      - rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672 
+      SPRING_RABBITMQ_HOST: rabbitmq 
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+
+  ms-nota-fiscal:
+    image: nota-fiscal
+    mem_limit: 700m
+    ports:
+      - "8100:8100"
+    networks:
+      - backend-network
+    depends_on:
+      - name-server
+      - rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672 
+      SPRING_RABBITMQ_HOST: rabbitmq 
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+
+  backend:
+    image: backend
+    mem_limit: 700m
+    ports:
+      - "8080:8080"
+    networks:
+      - backend-network
+    depends_on:
+      - ms-estoque
+      - ms-nota-fiscal
+      - rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672 
+      SPRING_RABBITMQ_HOST: rabbitmq 
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+      
+  api-gateway:
+    image: gateway
+    mem_limit: 700m
+    ports:
+      - "8765:8765"
+    networks:
+      - backend-network
+    depends_on:
+      - backend
+      - rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://name-server:8761/eureka/
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672 
+      SPRING_RABBITMQ_HOST: rabbitmq 
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+
+  zipkin-server: 
+    image: openzipkin/zipkin
+    mem_limit: 300m 
+    ports: 
+      - "9411:9411" 
+    networks:
+      - backend-network
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq
+    mem_limit: 300m
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
