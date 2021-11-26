@@ -2,12 +2,12 @@ package com.bcopstein.Aplicacao.CasosDeUso;
 
 import com.bcopstein.Negocio.Servicos.ServicoDeVendas;
 import com.google.gson.Gson;
-import com.bcopstein.Negocio.Entidades.Venda.ItemVenda;
 import com.bcopstein.Negocio.Repositorio.IProdutos;
 import com.bcopstein.Aplicacao.Validacao.FactoryValidacao;
 import com.bcopstein.Interface.EstoqueProxy;
 import com.bcopstein.Interface.DTO.ItemEstoqueDTO;
-import com.bcopstein.Negocio.Entidades.Venda.Venda;
+import com.bcopstein.Interface.DTO.ItemVendaDTO;
+import com.bcopstein.Interface.DTO.VendaDTO;
 import com.bcopstein.Negocio.Exception.SistVendasException;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -39,7 +39,7 @@ public class ConfirmaVendaUC {
         this.factoryValidacao = factoryValidacao;
     }
 
-    public boolean execute(final List<ItemVenda> itensVenda) {
+    public boolean execute(final List<ItemVendaDTO> itensVenda) {
         // Verifica se todos os itens são válidos
         try{
           factoryValidacao.getRegraValidacao().valida(produtos, itensVenda, estoque);
@@ -48,13 +48,13 @@ public class ConfirmaVendaUC {
         }
 
         // Cria a venda
-        Venda venda = new Venda();
+        VendaDTO venda = new VendaDTO();
         venda.addItens(itensVenda);
 
         // Transformando de ItemVenda para ItemEstoqueDTO
         Collection<ItemEstoqueDTO> itensEstoque = new ArrayList<>();
         itensVenda.forEach((item) -> {
-            itensEstoque.add(new ItemEstoqueDTO((long) item.getNro(), item.getCodigoProduto(), item.getQuantidade()));
+            itensEstoque.add(new ItemEstoqueDTO((long) (item.getCodigoProduto()/10), item.getCodigoProduto(), item.getQuantidade()));
         });
 
         // Dá baixa no estoque
@@ -66,11 +66,9 @@ public class ConfirmaVendaUC {
                          servicoDeVendas.calculaPrecoFinal(itensVenda));
 
         // Persiste a venda
-        rabbitTemplate.convertAndSend("spring-boot-nota-fiscal", "venda.nova", gson.toJson(venda));
+        String json = gson.toJson(venda);
+        rabbitTemplate.convertAndSend("spring-boot-nota-fiscal", "venda.nova", json);
 
         return true;
       }
-    
-    
-    
 }

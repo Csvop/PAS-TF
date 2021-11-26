@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bcopstein.Negocio.Entidades.Produto.Produto;
-import com.bcopstein.Negocio.Entidades.Venda.ItemVenda;
 import com.bcopstein.Negocio.Exception.SistVendasException;
 import com.bcopstein.Negocio.Repositorio.IProdutos;
 
@@ -18,13 +17,13 @@ public class MapeadorItemCarrinho {
         this.produtos = produtos;
     }
 
-    public List<ItemVenda> ItemCarrinhoToItemvenda(ItemCarrinhoDTO[] itens) {
-        List<ItemVenda> itensVenda = new ArrayList<>(itens.length);
+    public List<ItemVendaDTO> ItemCarrinhoToItemvenda(ItemCarrinhoDTO[] itens) {
+        List<ItemVendaDTO> itensVenda = new ArrayList<>(itens.length);
         for (ItemCarrinhoDTO item : itens) {
             final Produto produto = produtos.recupera((long)item.getCodigo());
             if (produto == null)
                 throw new SistVendasException(SistVendasException.Causa.PRODUTO_INEXISTENTE);
-            ItemVenda itemVenda = new ItemVenda(itensVenda.size() + 1, produto.getCodigo(), item.getQuantidade(),
+            ItemVendaDTO itemVenda = new ItemVendaDTO(itensVenda.size() + 1, produto.getCodigo(), item.getQuantidade(),
                     produto.getPreco());
             itensVenda.add(itemVenda);
         }
