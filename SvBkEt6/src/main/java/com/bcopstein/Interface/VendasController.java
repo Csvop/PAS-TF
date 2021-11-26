@@ -7,10 +7,10 @@ import com.bcopstein.Aplicacao.CasosDeUso.CalculaSubtotalUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ConfirmaVendaUC;
 import com.bcopstein.Aplicacao.CasosDeUso.ListarProdutosUC;
 import com.bcopstein.Interface.DTO.ItemCarrinhoDTO;
+import com.bcopstein.Interface.DTO.ItemVendaDTO;
 import com.bcopstein.Interface.DTO.MapeadorItemCarrinho;
+import com.bcopstein.Interface.DTO.VendaDTO;
 import com.bcopstein.Negocio.Entidades.Produto.Produto;
-import com.bcopstein.Negocio.Entidades.Venda.ItemVenda;
-import com.bcopstein.Negocio.Entidades.Venda.Venda;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -62,20 +62,20 @@ public class VendasController {
   @PostMapping("/confirmacao")
   @CrossOrigin(origins = "*")
   public boolean confirmaVenda(@RequestBody final ItemCarrinhoDTO[] itens) {
-    List<ItemVenda> itensVenda = mapeadorIC.ItemCarrinhoToItemvenda(itens);
+    List<ItemVendaDTO> itensVenda = mapeadorIC.ItemCarrinhoToItemvenda(itens);
     return confirmaVendaUC.execute(itensVenda);
   }
 
   @GetMapping("/historico")
   @CrossOrigin(origins = "*")
-  public Collection<Venda> vendasEfetuadas() {
+  public Collection<VendaDTO> vendasEfetuadas() {
     return notaFiscalProxy.listaVendas();
   }
 
   @PostMapping("/subtotal")
   @CrossOrigin(origins = "*")
   public Integer[] calculaSubtotal(@RequestBody final ItemCarrinhoDTO[] itens) {
-    List<ItemVenda> itensVenda = mapeadorIC.ItemCarrinhoToItemvenda(itens);
+    List<ItemVendaDTO> itensVenda = mapeadorIC.ItemCarrinhoToItemvenda(itens);
     return calculaSubtotalUC.execute(itensVenda);
   }
 }

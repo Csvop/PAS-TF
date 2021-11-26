@@ -1,0 +1,71 @@
+package com.bcopstein.Interface.DTO;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class VendaDTO {
+  private Long codigo;
+  private List<ItemVendaDTO> itens;
+  private double subtotal;
+  private double impostos;
+  private double valorFinal;
+  private boolean fechada;
+
+  public VendaDTO() {
+    this.itens = new LinkedList<>();
+    this.subtotal = 0.0;
+    this.impostos = 0.0;
+    this.valorFinal = 0.0;
+    this.fechada = false;
+  }
+
+  public Long getCodigo() {
+    return codigo;
+  }
+
+  public void setCodigo(Long codigo) {
+    this.codigo = codigo;
+  }
+
+  public List<ItemVendaDTO> getItens(){
+    return itens;
+  }
+
+  public double getSubtotal() {
+    return subtotal;
+  }
+
+  public double getImpostos() {
+    return impostos;
+  }
+
+  public double getValorFinal() {
+    return valorFinal;
+  }
+
+  public boolean isFechada() {
+    return fechada;
+  }
+ 
+  public boolean addItens(List<ItemVendaDTO> itens) {
+    if (!fechada) {
+      this.itens.addAll(itens); // Aqui estava o bug. Faltava o this  
+      return true;
+    }
+    return false;
+  }
+
+  public void fechaVenda(double subtotal, double impostos, double valorFinal) {
+    fechada = true;
+    this.subtotal = subtotal;
+    this.impostos = impostos;
+    this.valorFinal = valorFinal;
+  }
+
+  @Override
+  public String toString() {
+    return "Venda [codigo=" + codigo + ", fechada=" + fechada + ", impostos=" + impostos + ", itens="
+        + itens.toString() + ", subtotal=" + subtotal + ", valorFinal=" + valorFinal + "]";
+  }
+  
+}

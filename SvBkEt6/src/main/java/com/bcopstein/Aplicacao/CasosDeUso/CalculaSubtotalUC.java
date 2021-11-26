@@ -7,9 +7,9 @@ import java.util.List;
 
 import com.bcopstein.Aplicacao.Validacao.FactoryValidacao;
 import com.bcopstein.Interface.EstoqueProxy;
+import com.bcopstein.Interface.DTO.ItemVendaDTO;
 import com.bcopstein.Negocio.Repositorio.IProdutos;
 import com.bcopstein.Negocio.Servicos.ServicoDeVendas;
-import com.bcopstein.Negocio.Entidades.Venda.ItemVenda;
 import com.bcopstein.Negocio.Exception.SistVendasException;
 
 
@@ -30,7 +30,7 @@ public class CalculaSubtotalUC {
         this.servicoDeVendas = servicoDeVendas;
     }
 
-    public Integer[] execute(final List<ItemVenda> itensVenda) throws SistVendasException {
+    public Integer[] execute(final List<ItemVendaDTO> itensVenda) throws SistVendasException {
         // Verifica se todos os itens são válidos
         factoryValidacao.getRegraValidacao().valida(produtos, itensVenda, estoque);
         // Calcula os valores e retorna

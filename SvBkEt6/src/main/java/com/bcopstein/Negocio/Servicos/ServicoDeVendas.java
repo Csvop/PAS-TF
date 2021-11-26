@@ -1,11 +1,8 @@
 package com.bcopstein.Negocio.Servicos;
 
-import java.util.Collection;
 import java.util.List;
 
-import com.bcopstein.Negocio.Entidades.Venda.ItemVenda;
-import com.bcopstein.Negocio.Entidades.Venda.Venda;
-import com.bcopstein.Negocio.Repositorio.IVendas;
+import com.bcopstein.Interface.DTO.ItemVendaDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,35 +10,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServicoDeVendas {
     private IRegraImposto regraImposto;
-    private IVendas vendas;
 
     @Autowired
-    public ServicoDeVendas(IRegraImposto regraImposto,IVendas vendas) {
+    public ServicoDeVendas(IRegraImposto regraImposto) {
         this.regraImposto = regraImposto;
-        this.vendas = vendas;
     }
 
-    public void cadastra(Venda venda){
-        vendas.cadastra(venda);
-    }
-
-    public Collection<Venda> todas(){
-        return vendas.todos();
-    }
-
-    public Integer calculaSubtotal(List<ItemVenda> itens) {
+    public Integer calculaSubtotal(List<ItemVendaDTO> itens) {
         return (int) (itens.stream().mapToDouble(it -> it.getValorVendido() * it.getQuantidade()).sum());
     }
 
-    public Integer calculaImpostos(List<ItemVenda> itens) {
+    public Integer calculaImpostos(List<ItemVendaDTO> itens) {
         return (int) regraImposto.calcular(itens);
     }
 
-    public Integer calculaPrecoFinal(List<ItemVenda> itens) {
+    public Integer calculaPrecoFinal(List<ItemVendaDTO> itens) {
         return calculaSubtotal(itens) + calculaImpostos(itens);
     }
 
-    public Integer[] todosValores(List<ItemVenda> itens) {
+    public Integer[] todosValores(List<ItemVendaDTO> itens) {
         Integer[] valores = new Integer[3];
         valores[0] = calculaSubtotal(itens);
         valores[1] = calculaImpostos(itens);

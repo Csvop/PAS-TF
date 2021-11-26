@@ -1,7 +1,7 @@
 package com.bcopstein.Interface.InjecaoConfig;
 
-import com.bcopstein.Aplicacao.Imposto.RegraImpostoComprasGrandes;
-import com.bcopstein.Aplicacao.Imposto.RegraImpostoOriginal;
+import com.bcopstein.Interface.DTO.Imposto.RegraImpostoComprasGrandes;
+import com.bcopstein.Interface.DTO.Imposto.RegraImpostoOriginal;
 import com.bcopstein.Negocio.Servicos.IRegraImposto;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
