@@ -21,8 +21,10 @@ public class ServicoDeEstoque {
     }
 
     public boolean baixa(Collection<ItemEstoque> itens) {
+        Collection<ItemEstoque> itensRollback = estoque.todos();
         Collection<ItemEstoque> itensBD = estoque.todos();
         Collection<ItemEstoque> validos = new ArrayList<>();
+        boolean precisaRollback = false;
 
         for (ItemEstoque itemBD : itensBD) {
             for(ItemEstoque item : itens) {
@@ -35,6 +37,7 @@ public class ServicoDeEstoque {
 
         if(validos.size() == itens.size()) {
             
+            //Verificação do Baixa
             for (ItemEstoque itemBD : itensBD) {
                 for(ItemEstoque item : itens) {
                     if(item.getNroItem() == itemBD.getNroItem()
@@ -45,10 +48,34 @@ public class ServicoDeEstoque {
                 }
             }
 
+            // Vereificação do Rollback
+            for (ItemEstoque itemBD : itensBD) {
+                for(ItemEstoque item : itens) {
+                    try {
+                        if(itemBD.getCodigoProduto() == item.getCodigoProduto()) {
+                            itemBD.saida(item.getQuantidade());
+                        }
+                    } catch (Exception e) {
+                        precisaRollback = true;
+                    }
+                }
+            }
+
+            if(precisaRollback) {
+                rollback(itensRollback);
+                return false;
+            }
+
             return true;
         } else {
             return false;
         }
+    }
+
+    public void rollback(Collection<ItemEstoque> itens) {
+        itens.forEach((item) -> {
+            estoque.atualiza(item);
+        });
     }
 
     public void chegadaDeProdutos(List<ItemEstoque> itens) {

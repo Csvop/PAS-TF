@@ -77,6 +77,7 @@ public class EstoqueController {
   // Baixa no estoque: 
   // Deve atualizar a quantidade de um produto no estoque subtraindo a quantidade vendida. 
   // Deve sinalizar caso a operação não seja possível.
+  // ->> AGORA COM ROLLBACK <<- caso algum produto esteja em falta na hora de baixar.
   @PostMapping("/baixa")
   public boolean baixaEstoque(@RequestBody Collection<ItemEstoque> itens) {
     return baixaDeProdutoUC.execute(itens);
