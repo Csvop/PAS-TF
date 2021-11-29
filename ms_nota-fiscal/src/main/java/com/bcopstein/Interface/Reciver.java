@@ -9,13 +9,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Reciver { 
-    Gson gson = new Gson();
-
     @Autowired
     RegistraVendaUC registraVendaUC;
 
     public void registraVenda(String json) {
-      Venda venda = gson.fromJson(json, Venda.class);
-      registraVendaUC.execute(venda);
+      //Gson gson = new Gson();
+      //Venda venda = gson.fromJson(json, Venda.class);
+      //registraVendaUC.execute(venda);
+      System.out.println("\n\n\n\n\n\n\n");
+      System.out.println(json);
+      System.out.println("\n\n\n\n\n\n\n");
     }
 }

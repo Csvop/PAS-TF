@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.bcopstein.Negocio.Repositorio.IProdutos;
 import com.bcopstein.Aplicacao.Validacao.FactoryValidacao;
 import com.bcopstein.Interface.EstoqueProxy;
+import com.bcopstein.Interface.NotaFiscalProxy;
 import com.bcopstein.Interface.DTO.ItemEstoqueDTO;
 import com.bcopstein.Interface.DTO.ItemVendaDTO;
 import com.bcopstein.Interface.DTO.VendaDTO;
@@ -24,10 +25,11 @@ public class ConfirmaVendaUC {
     private IProdutos produtos;
     private FactoryValidacao factoryValidacao;
 
-    Gson gson = new Gson();
-
     @Autowired
     EstoqueProxy estoque;
+
+    @Autowired
+    NotaFiscalProxy notaFiscal;
 
     @Autowired
     RabbitTemplate rabbitTemplate;
@@ -66,9 +68,10 @@ public class ConfirmaVendaUC {
                          servicoDeVendas.calculaPrecoFinal(itensVenda));
 
         // Persiste a venda
-        String json = gson.toJson(venda);
-        rabbitTemplate.convertAndSend("spring-boot-nota-fiscal", "venda.nova", json);
+        notaFiscal.registraVenda(venda);
 
+        //String json = gson.toJson(venda);
+        //rabbitTemplate.convertAndSend("spring-boot-nota-fiscal", "venda.nova", "Ola mamae!");
         return true;
       }
 }
